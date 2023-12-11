@@ -1,0 +1,44 @@
+{
+  "ledPresets": [
+    {
+      "name": "Green",
+      "hex": "#00FF00",
+      "mode": "solid"
+    },
+    {
+      "name": "Blue",
+      "hex": "#0000FF",
+      "mode": "solid"
+    },
+    {
+      "name": "Red",
+      "hex": "#ff0000",
+      "mode": "solid"
+    },
+    {
+      "name": "Yellow",
+      "hex": "#ffff00",
+      "mode": "solid"
+    },
+    {
+      "name": "Magenta",
+      "hex": "#ff00ff",
+      "mode": "solid"
+    },
+    {
+      "name": "Cyan",
+      "hex": "#00ffff",
+      "mode": "solid"
+    },
+    {
+      "name": "White",
+      "hex": "#ffffff",
+      "mode": "solid"
+    },
+    {
+      "name": "Rainbow",
+      "hex": "#000000",
+      "mode": "rainbow"
+    }
+  ]
+}
