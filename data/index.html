@@ -1,0 +1,117 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Lightstick</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body style="background-color:#453C67;color:#F2F7A1;">
+    <h1>Lightstick Config</h1>
+    <form method="POST" action="/update" enctype="multipart/form-data">
+        <input type="file" name="bin" />
+        <input type="submit" value="Upload" />
+    </form>
+    <form method="GET" action="/wifi">
+        <input type="text" name="ssid" placeholder="SSID" />
+        <input type="password" name="password" placeholder="Password" />
+        <input type="submit" value="Configure WiFi" />
+    </form>
+    <div id="presets">
+
+    </div>
+    <script>
+        fetch('/config')
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                const preset = data.ledPresets;
+                const cardDiv = document.getElementById('presets');
+                preset.forEach(item => {
+    const card = document.createElement('div');
+    card.classList = 'card';
+
+    const contentDiv = document.createElement('div');
+    contentDiv.style.marginLeft = '10px';
+    contentDiv.style.marginBottom = '10px';
+    contentDiv.style.marginTop = '10px';
+
+    const header = document.createElement('h2');
+    header.style.margin = '0px';
+    header.textContent = item.name;
+
+    const colorPara = document.createElement('p');
+    colorPara.style.margin = '0px';
+    colorPara.textContent = item.hex;
+
+    const modePara = document.createElement('p');
+    modePara.style.margin = '0px';
+    modePara.textContent = item.mode;
+
+    const speedPara = document.createElement('p');
+    speedPara.style.margin = '0px';
+    speedPara.textContent = item.speed;
+
+    const form = document.createElement('form');
+    form.action = '/delete';
+    form.method = 'GET';
+    form.style.margin = '0px';
+
+    const input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = 'name';
+    input.value = item.name;
+
+    const submitBtn = document.createElement('input');
+    submitBtn.type = 'submit';
+    submitBtn.value = 'Delete';
+
+    form.appendChild(input);
+    form.appendChild(submitBtn);
+
+    contentDiv.appendChild(header);
+    contentDiv.appendChild(colorPara);
+    contentDiv.appendChild(modePara);
+    contentDiv.appendChild(speedPara);
+    contentDiv.appendChild(form);
+
+    const colorDiv = document.createElement('div');
+    colorDiv.style.borderTopLeftRadius = '10px';
+    colorDiv.style.borderBottomLeftRadius = '10px';
+    colorDiv.style.marginLeft = '0px';
+    colorDiv.style.width = '20px';
+
+    if (item.mode === 'solid' || item.mode === 'blink' || item.mode === 'chaseup') {
+        colorDiv.style.backgroundColor = item.hex;
+    } else if (item.mode === 'rainbow') {
+        colorDiv.style.background = 'linear-gradient(0deg, rgba(255,0,0,1) 0%, rgba(255,154,0,1) 10%, rgba(208,222,33,1) 20%, rgba(79,220,74,1) 30%, rgba(63,218,216,1) 40%, rgba(47,201,255,1) 50%, rgba(47,201,255,1) 60%, rgba(37,162,255,1) 70%, rgba(61,87,255,1) 80%, rgba(89,58,221,1) 90%, rgba(165,94,234,1) 100%)';
+    }
+
+    card.style.backgroundColor = '#6D67E4';
+    card.style.borderRadius = '10px';
+    card.style.marginBottom = '10px';
+    card.style.display = 'flex';
+
+    card.appendChild(colorDiv);
+    card.appendChild(contentDiv);
+    cardDiv.appendChild(card);
+});
+            })
+            .catch(error => console.error(error))
+    </script>
+
+    <form action="/get" method="GET" id="newConfig">
+        <input type="text" name="name">
+        <input type="color" name="color">
+        <select name="mode" form="newConfig">
+            <option value="solid">Solid</option>
+            <option value="rainbow">Rainbow</option>
+            <option value="blink">Blink</option>
+            <option value="chaseup">ChaseUp</option>
+        </select>
+        <input type="range" min="1" max="100" value="50" name="speed">
+        <input type="submit" value="Submit">
+    </form>
+</body>
+
+</html>

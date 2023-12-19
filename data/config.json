@@ -3,7 +3,8 @@
     {
       "name": "Green",
       "hex": "#00FF00",
-      "mode": "solid"
+      "mode": "blink",
+      "speed": 50
     },
     {
       "name": "Blue",
@@ -38,7 +39,10 @@
     {
       "name": "Rainbow",
       "hex": "#000000",
-      "mode": "rainbow"
+      "mode": "rainbow",
+      "speed": 100
     }
-  ]
+  ],
+  "ssid": "LightStick",
+  "password": "HelloWorld"
 }
