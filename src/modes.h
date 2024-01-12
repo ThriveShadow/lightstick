@@ -10,6 +10,8 @@ class lightstick {
     void Rainbow(CRGB leds[], int numLeds, int speed);
     void Blink(CRGB leds[], int numLeds, int speed, CRGB color);
     void ChaseUp(CRGB leds[], int numLeds, int speed, CRGB color);
+    void ChaseDown(CRGB leds[], int numLeds, int speed, CRGB color);
+    void Fade(CRGB leds[], int numLeds, int speed, CRGB color);
 };
 
 #endif

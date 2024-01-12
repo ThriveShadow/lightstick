@@ -7,9 +7,16 @@
 #include <ArduinoJson.h>
 #include <modes.h>
 
-#define LED_PIN D7
+// //For Wemos D10 Mini
+// #define LED_PIN D7
+// #define buttonPin D8
+
+//for ESP-12
+#define LED_PIN 12
+#define buttonPin 4
+
+
 #define NUM_LEDS 7
-const int buttonPin = D8;
 
 CRGB leds[NUM_LEDS];
 
@@ -33,7 +40,7 @@ void mainCode()
     Serial.print(" - ");
     Serial.println(dir.fileSize());
   }
-
+  
   // Check for OTA updates
   if (LittleFS.exists("/update.bin"))
   {
@@ -95,7 +102,7 @@ void mainCode()
     File configFile = LittleFS.open("/config.json", "r");
     if (configFile)
     {
-      DynamicJsonDocument doc(1024);
+      DynamicJsonDocument doc(2048);
       DeserializationError error = deserializeJson(doc, configFile);
       if (error)
       {
@@ -144,6 +151,16 @@ void mainCode()
               light.ChaseUp(leds, NUM_LEDS, speed, CRGB(red, green, blue));
               prevButtonState = LOW;
             }
+            else if (mode == "chasedown")
+            {
+              light.ChaseDown(leds, NUM_LEDS, speed, CRGB(red, green, blue));
+              prevButtonState = LOW;
+            }
+            else if (mode == "fade")
+            {
+              light.Fade(leds, NUM_LEDS, speed, CRGB(red, green, blue));
+              prevButtonState = LOW;
+            }
           }
           Serial.println("If the button is not pressed, it should be stuck here");
 
@@ -172,7 +189,7 @@ void mainCode()
 void handleUpload(AsyncWebServerRequest *request, String filename, size_t index, uint8_t *data, size_t len, bool final)
 {
   static fs::File fsUploadFile;
-  static const String uploadFilename = "/update.bin"; // Change this to your desired filename
+  static const String uploadFilename = filename;
 
   if (!index)
   {
@@ -223,7 +240,7 @@ void setup()
     File configFile = LittleFS.open("/config.json", "r");
     if (configFile)
     {
-      DynamicJsonDocument doc(1024);
+      DynamicJsonDocument doc(2048);
       DeserializationError error = deserializeJson(doc, configFile);
       if (error)
       {
@@ -282,7 +299,7 @@ void setup()
               File configFile = LittleFS.open("/config.json", "r");
               if (configFile)
               {
-                DynamicJsonDocument doc(1024);
+                DynamicJsonDocument doc(2048);
                 DeserializationError error = deserializeJson(doc, configFile);
                 if (error)
                 {
@@ -369,6 +386,14 @@ void setup()
               {
                 light.ChaseUp(leds, NUM_LEDS, speed, CRGB(red, green, blue));
               }
+              else if(mode == "chasedown")
+              {
+                light.ChaseDown(leds, NUM_LEDS, speed, CRGB(red, green, blue));
+              }
+              else if(mode == "fade")
+              {
+                light.Fade(leds, NUM_LEDS, speed, CRGB(red, green, blue));
+              }
               
 
   if (LittleFS.exists("/config.json"))
@@ -376,7 +401,7 @@ void setup()
     File configFile = LittleFS.open("/config.json", "r");
     if (configFile)
     {
-      DynamicJsonDocument doc(1024);
+      DynamicJsonDocument doc(2048);
       DeserializationError error = deserializeJson(doc, configFile);
       if (error)
       {
@@ -407,8 +432,7 @@ void setup()
     Serial.println("Config file doesn't exist");
   } });
 
-  server.on(
-      "/update", HTTP_POST, [](AsyncWebServerRequest *request)
+  server.on("/update", HTTP_POST, [](AsyncWebServerRequest *request)
       { request->send(200); },
       handleUpload);
 
@@ -428,7 +452,7 @@ void setup()
                 File configFile = LittleFS.open("/config.json", "r");
                 if (configFile)
                 {
-                  DynamicJsonDocument doc(1024);
+                  DynamicJsonDocument doc(2048);
                   DeserializationError error = deserializeJson(doc, configFile);
                   if (error)
                   {

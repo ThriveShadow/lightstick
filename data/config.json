@@ -4,7 +4,7 @@
       "name": "Green",
       "hex": "#00FF00",
       "mode": "blink",
-      "speed": 50
+      "speed": 70
     },
     {
       "name": "Blue",
@@ -14,17 +14,20 @@
     {
       "name": "Red",
       "hex": "#ff0000",
-      "mode": "solid"
+      "mode": "chaseup",
+      "speed": 90
     },
     {
       "name": "Yellow",
       "hex": "#ffff00",
-      "mode": "solid"
+      "mode": "chasedown",
+      "speed": 100
     },
     {
       "name": "Magenta",
       "hex": "#ff00ff",
-      "mode": "solid"
+      "mode": "Fade",
+      "speed": 100
     },
     {
       "name": "Cyan",

@@ -81,10 +81,10 @@
     colorDiv.style.marginLeft = '0px';
     colorDiv.style.width = '20px';
 
-    if (item.mode === 'solid' || item.mode === 'blink' || item.mode === 'chaseup') {
-        colorDiv.style.backgroundColor = item.hex;
-    } else if (item.mode === 'rainbow') {
+    if (item.mode === 'rainbow') {
         colorDiv.style.background = 'linear-gradient(0deg, rgba(255,0,0,1) 0%, rgba(255,154,0,1) 10%, rgba(208,222,33,1) 20%, rgba(79,220,74,1) 30%, rgba(63,218,216,1) 40%, rgba(47,201,255,1) 50%, rgba(47,201,255,1) 60%, rgba(37,162,255,1) 70%, rgba(61,87,255,1) 80%, rgba(89,58,221,1) 90%, rgba(165,94,234,1) 100%)';
+    } else {
+        colorDiv.style.backgroundColor = item.hex;
     }
 
     card.style.backgroundColor = '#6D67E4';
@@ -108,6 +108,8 @@
             <option value="rainbow">Rainbow</option>
             <option value="blink">Blink</option>
             <option value="chaseup">ChaseUp</option>
+            <option value="chasedown">ChaseDown</option>
+            <option value="fade">Fade</option>
         </select>
         <input type="range" min="1" max="100" value="50" name="speed">
         <input type="submit" value="Submit">
